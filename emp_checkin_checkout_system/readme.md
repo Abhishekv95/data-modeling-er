@@ -59,3 +59,54 @@ Example Data:
 attendance_sk	employee_sk	checkin_time_id	checkout_time_id	attendance_date	hours_worked
 1	1	1	2	2023-10-15	9.5
 2	1	1	2	2023-10-16	8.0
+
+
+
+
+
+
+Employee Check-In/Check-Out System. This system is designed to track employee attendance, including check-in and check-out times, as well as any shifts, locations, and attendance reports.
+
+Main Entities and Relationships
+Employee
+
+Attributes: employee_id (PK), name, department, position, email, phone_number, status
+Relationships:
+Can have multiple CheckIns and CheckOuts
+Assigned to one or more Shifts
+Shift
+
+Attributes: shift_id (PK), shift_name, start_time, end_time, shift_type (e.g., morning, evening), location_id (FK)
+Relationships:
+Linked to multiple Employees
+Associated with a Location
+Location
+
+Attributes: location_id (PK), location_name, address, city, state, country
+Relationships:
+Has multiple Shifts
+Tracks employee CheckIns and CheckOuts
+CheckIn
+
+Attributes: checkin_id (PK), employee_id (FK), shift_id (FK), location_id (FK), checkin_time, date
+Relationships:
+Linked to an Employee, Shift, and Location
+Paired with a corresponding CheckOut for the same employee and shift
+CheckOut
+
+Attributes: checkout_id (PK), employee_id (FK), shift_id (FK), location_id (FK), checkout_time, date
+Relationships:
+Linked to an Employee, Shift, and Location
+Associated with a corresponding CheckIn for tracking complete attendance time
+AttendanceReport
+
+Attributes: report_id (PK), employee_id (FK), date, checkin_time, checkout_time, shift_id (FK), location_id (FK), hours_worked, status (e.g., Present, Absent, Late)
+Relationships:
+Aggregates data from CheckIns and CheckOuts
+Belongs to an Employee
+ER Diagram Design Notes
+Employee: Represents an employee in the organization. Each employee is associated with multiple check-ins and check-outs.
+Shift: Defines specific shifts, associating employees to particular time slots and locations.
+Location: Represents physical locations where employees check in and out. It’s linked to specific shifts and can be used to manage location-based attendance.
+CheckIn and CheckOut: Capture the check-in and check-out times for each employee. These records are associated with a specific shift and location.
+AttendanceReport: Summarizes daily attendance data, providing a complete record of check-in/out times, total hours worked, and attendance status (e.g., late or present).
